@@ -1,42 +1,42 @@
-const formData = {
+const feedbackForm = document.querySelector('.feedback-form');
+const email = feedbackForm.elements.email;
+const message = feedbackForm.elements.message;
+const LS_KEY = 'feedback-form-state';
+
+const formData = JSON.parse(localStorage.getItem(LS_KEY)) ?? {
   email: '',
   message: '',
 };
 
-const form = document.querySelector('.feedback-form');
-const emailInput = form.elements.email;
-const messageInput = form.elements.message;
+if (formData.email || formData.message) {
+  email.value = formData.email;
+  message.value = formData.message;
+}
 
-const saveFormData = () => {
-  formData.email = emailInput.value;
-  formData.message = messageInput.value;
-  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
-};
+feedbackForm.addEventListener('input', saveFormState);
+feedbackForm.addEventListener('submit', sendForm);
 
-form.addEventListener('input', saveFormData);
-
-const loadFormData = () => {
-  const savedData = localStorage.getItem('feedback-form-state');
-  if (savedData) {
-    const parsedData = JSON.parse(savedData);
-    formData.email = parsedData.email;
-    formData.message = parsedData.message;
-    emailInput.value = formData.email;
-    messageInput.value = formData.message;
-  }
-};
-
-loadFormData();
-
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  if (!formData.email || !formData.message) {
-    alert('Fill please all fields');
+function saveFormState(event) {
+  //   console.log(event.target);
+  if (event.target.name === 'email') {
+    formData.email = email.value.trim();
+  } else if (event.target.name === 'message') {
+    formData.message = message.value.trim();
+  } else {
     return;
   }
-  console.log(formData);
-  localStorage.removeItem('feedback-form-state');
-  formData.email = '';
-  formData.message = '';
-  form.reset();
-});
+  localStorage.setItem(LS_KEY, JSON.stringify(formData));
+}
+
+function sendForm(event) {
+  event.preventDefault();
+  if (formData.email !== '' && formData.message !== '') {
+    console.log(formData);
+    localStorage.removeItem(LS_KEY);
+    formData.email = '';
+    formData.message = '';
+    feedbackForm.reset();
+  } else {
+    alert('Fill please all fields');
+  }
+}
