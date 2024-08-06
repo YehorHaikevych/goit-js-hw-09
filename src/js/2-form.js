@@ -17,7 +17,6 @@ feedbackForm.addEventListener('input', saveFormState);
 feedbackForm.addEventListener('submit', sendForm);
 
 function saveFormState(event) {
-  //   console.log(event.target);
   if (event.target.name === 'email') {
     formData.email = email.value.trim();
   } else if (event.target.name === 'message') {
