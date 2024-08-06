@@ -1,8 +1,2 @@
-import"./assets/styles-f3635d75.js";import{S as l}from"./assets/vendor-10cb7c31.js";const r=[{preview:"path/to/small-image1.jpg",original:"path/to/large-image1.jpg",description:"Image 1 description"},{preview:"path/to/small-image2.jpg",original:"path/to/large-image2.jpg",description:"Image 2 description"}],o=document.getElementById("gallery");function g(a){return a.map(({preview:e,original:i,description:t})=>`
-            <li class="gallery-item">
-                <a class="gallery-link" href="${i}">
-                    <img class="gallery-image" src="${e}" alt="${t}" />
-                </a>
-            </li>
-        `).join("")}o.innerHTML=g(r);new l(".gallery a",{captionsData:"alt",captionDelay:250,captionPosition:"bottom"});
+import"./assets/modulepreload-polyfill-3cfb730f.js";/* empty css                      */const e={email:"",message:""},a=document.querySelector(".feedback-form"),m=a.elements.email,l=a.elements.message,o=()=>{e.email=m.value,e.message=l.value,localStorage.setItem("feedback-form-state",JSON.stringify(e))};a.addEventListener("input",o);const r=()=>{const t=localStorage.getItem("feedback-form-state");if(t){const s=JSON.parse(t);e.email=s.email,e.message=s.message,m.value=e.email,l.value=e.message}};r();a.addEventListener("submit",t=>{if(t.preventDefault(),!e.email||!e.message){alert("Fill please all fields");return}console.log(e),localStorage.removeItem("feedback-form-state"),e.email="",e.message="",a.reset()});
 //# sourceMappingURL=commonHelpers2.js.map
